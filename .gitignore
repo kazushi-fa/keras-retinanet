@@ -21,3 +21,8 @@ __pycache__/
 .coverage.*
 coverage.xml
 *.cover
+datasets/*
+keras_retinanet/utils/compute_overlap.c
+keras_retinanet/utils/compute_overlap.cpython-37m-x86_64-linux-gnu.so
+trained_models/*
+examples/*.jpg
