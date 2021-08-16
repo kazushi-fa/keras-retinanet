@@ -3,6 +3,12 @@ from natsort import natsorted
 import glob
 import csv
 import os
+from PIL import Image
+
+def convert_to_jpg(png_path, jpg_path):
+    im = Image.open(png_path)
+    im = im.convert("RGB")
+    im.save(jpg_path)
 
 def make_labelfile(dir_images, xml_files, out_csv):
     with open(out_csv, 'a') as f:
@@ -18,12 +24,16 @@ def make_labelfile(dir_images, xml_files, out_csv):
                 xmax = str(e.findall("bndbox2D/xmax")[0].text)
                 ymax = str(e.findall("bndbox2D/ymax")[0].text)
                 # print(dir_images +filename, xmin, ymin, xmax, ymax, category)
-                out_list = [dir_images +filename, xmin, ymin, xmax, ymax, category]
+                png_path = str(xml_file.replace('.xml', '.png').replace('/labels/', '/images/'))
+                jpg_path = png_path.replace('.png', '.jpg').replace('/images/', '/jpg_images/')  
+                # print(png_path, jpg_path)
+                # convert_to_jpg(png_path, jpg_path)
+                out_list = [jpg_path, xmin, ymin, xmax, ymax, category]
                 writer = csv.writer(f)
                 writer.writerow(out_list)
 
 if __name__ == '__main__':
-    rareplane_dir = "/home/elsa/elsa_work/keras-retinanet/datasets/rareplanes/"
+    rareplane_dir = "/home/ubuntu/work/keras-retinanet/datasets/rareplanes/"
 
     data_mode = ["train", "val", "test"]
     for i in data_mode:
