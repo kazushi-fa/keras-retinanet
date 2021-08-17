@@ -27,7 +27,7 @@ def make_labelfile(dir_images, xml_files, out_csv):
                 png_path = str(xml_file.replace('.xml', '.png').replace('/labels/', '/images/'))
                 jpg_path = png_path.replace('.png', '.jpg').replace('/images/', '/jpg_images/')  
                 # print(png_path, jpg_path)
-                # convert_to_jpg(png_path, jpg_path)
+                convert_to_jpg(png_path, jpg_path)
                 out_list = [jpg_path, xmin, ymin, xmax, ymax, category]
                 writer = csv.writer(f)
                 writer.writerow(out_list)
